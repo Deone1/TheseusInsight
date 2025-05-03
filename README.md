@@ -1,6 +1,6 @@
-# PaperPal
+# TheseusInsight
 
-PaperPal is a multi-purpose project that processes PDF research papers, ranks them against your research interests, generates personalized newsletters, and can also produce podcast episodes (including optional visualized audio). It uses a combination of FastAPI endpoints, language models (LLMs), text-to-speech engines, and various utility scripts.
+TheseusInsight is a multi-purpose project that processes PDF research papers, ranks them against your research interests, generates personalized newsletters, and can also produce podcast episodes (including optional visualized audio). It uses a combination of FastAPI endpoints, language models (LLMs), text-to-speech engines, and various utility scripts.
 
 ## Table of Contents
 - [Overview](#overview)
@@ -8,14 +8,7 @@ PaperPal is a multi-purpose project that processes PDF research papers, ranks th
 - [Architecture and Modules](#architecture-and-modules)
 - [Installation](#installation)
 - [Environment Variables](#environment-variables)
-- [Running the API](#running-the-api)
-- [Key Endpoints](#key-endpoints)
-  - [PDF Uploads](#pdf-uploads)
-  - [Podcast Generation](#podcast-generation)
-  - [Script Management](#script-management)
-  - [Visualizer Generation](#visualizer-generation)
-  - [PaperPal Run Orchestration](#paperpal-run-orchestration)
-- [Using PaperPal as a Library](#using-paperpal-as-a-library)
+- [Using TheseusInsight as a Library](#using-theseusinsight-as-a-library)
   - [Core Workflow](#core-workflow)
   - [Example Usage](#example-usage)
 - [License](#license)
@@ -25,9 +18,9 @@ PaperPal is a multi-purpose project that processes PDF research papers, ranks th
 
 ## Overview
 
-PaperPal is designed to automate tasks around recent research papers. It:
+TheseusInsight is designed to automate tasks around recent research papers. It:
 
-1. **Fetches & parses** papers from [paperswithcode.com](https://paperswithcode.com/) dumps within a date range.
+1. **Fetches & parses** papers directly from [arXiv.org](https://arxiv.org/) using the OAI-PMH API within a date range.
 2. **Embeds** papers, checks their relevance to your research interests, and ranks them with large language models.
 3. **Generates** personalized newsletters describing those papers.
 4. **Produces** a TTS-based podcast from PDF or textual content, optionally with a dynamic visualizer video.
@@ -39,12 +32,7 @@ It leverages multiple text models (Anthropic, OpenAI, Ollama, or Google Gemini) 
 
 ## Features
 
-- **FastAPI** server with endpoints to handle:
-  - Uploading PDFs
-  - Generating scripts & podcasts
-  - Managing TTS visualizer generation
-  - Checking generation status, downloading results
-  - Handling a “PaperPal run” that orchestrates the entire pipeline
+
 - **In-memory or SQLite** database for:
   - Storing references to papers
   - Saving newsletters
@@ -59,14 +47,6 @@ It leverages multiple text models (Anthropic, OpenAI, Ollama, or Google Gemini) 
 ## Architecture and Modules
 
 ```
-api/
-  routers/
-    pdf.py          # Handles PDF upload
-    podcast.py      # Long-running tasks to generate podcasts
-    script.py       # Script management for saved dialogues
-    visualizer.py   # Endpoint to generate video visualizers from audio
-  main.py           # FastAPI entrypoint
-  paperpal_routes.py# Endpoint to orchestrate PaperPal runs
 
 communication/
   __init__.py
@@ -79,7 +59,8 @@ data_model/
 
 data_processing/
   data_handling.py  # SQLite DB interactions (papers, newsletters, podcasts)
-  paperswithcode.py # Download JSON dump from paperswithcode.com
+  arxiv.py          # Download and process data from arXiv.org
+  harvester.py      # OAI-PMH harvester for arXiv
   __init__.py
 
 inference/
@@ -113,7 +94,7 @@ __init__.py         # Root init
 ```
 
 **Key classes include:**
-- `PaperPal`: A higher-level orchestrator to download, embed, rank, generate newsletters, produce podcasts, and optionally email or upload final artifacts.
+- `TheseusInsight`: A higher-level orchestrator to download, embed, rank, generate newsletters, produce podcasts, and optionally email or upload final artifacts.
 - `GeneralPodcastGenerator` & `PaperPalPodcastGenerator`: Tools to assemble multi-speaker dialogues from PDF or text, convert them to TTS, and optionally produce a matrix-based visualizer.
 - Various FastAPI routers for structured endpoints.
 
@@ -144,23 +125,6 @@ View interactive docs at [http://localhost:8000/docs](http://localhost:8000/docs
 
 ---
 
-## Key Endpoints
-
-### PDF Uploads
-- **`POST /api/pdf/upload`**  Upload a single PDF file.
-- **`POST /api/pdf/batch-upload`**  Upload multiple PDFs.
-
-### Podcast Generation
-- **`POST /api/podcast/generate`**  Generate a podcast from PDFs or text.
-- **`GET /api/podcast/status/{task_id}`**  Check status of a podcast generation task.
-- **`GET /api/podcast/download/{filename}`**  Download the final podcast file.
-
-### Visualizer Generation
-- **`POST /api/visualizer/generate`**  Generate a visualizer video.
-- **`GET /api/visualizer/status/{task_id}`**  Check visualizer generation status.
-
----
-
 ## License
 
 This project is licensed under the [Apache License 2.0](LICENSE) unless otherwise stated in specific files.
@@ -169,11 +133,11 @@ This project is licensed under the [Apache License 2.0](LICENSE) unless otherwis
 
 ## Credits
 
-- [paperswithcode.com](https://paperswithcode.com/) for research paper data.
+- [arXiv.org](https://arxiv.org/) for research paper data.
 - [Docling](https://github.com/doclingjs/docling) for document parsing.
 - [pydub](https://github.com/jiaaro/pydub) for audio processing.
 - [KokoroTTS](https://github.com/fakeyh/kokoro-tts), [Amazon Polly](https://aws.amazon.com/polly/), [OpenAI TTS](https://platform.openai.com/docs/) for text-to-speech.
 - [FastAPI](https://fastapi.tiangolo.com/), [Pydantic](https://pydantic-docs.helpmanual.io/), [SQLite](https://www.sqlite.org/) for backend processing.
 
-PaperPal is maintained by [M. Chimiste](https://github.com/fakeyh) & contributors.
+TheseusInsight is maintained by [M. Chimiste](https://github.com/fakeyh) & contributors.
 

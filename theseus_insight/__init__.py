@@ -13,7 +13,7 @@
 # limitations under the License.
 
 __version__ = "0.0.7"
-from .paperpal import PaperPal
+from .theseus_insight import TheseusInsight
 from .prompt import *
 from .podcast import *
 from .inference import *

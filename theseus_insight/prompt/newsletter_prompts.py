@@ -22,7 +22,7 @@ Research interests:
 Source material:
 {{title_abstract_content}}
 
-Write the newsletter in the provided JSON schema under draft. The draft should be a string.  Address the reader as "Dear Reader" and sign off as "PaperPal".
+Write the newsletter in the provided JSON schema under draft. The draft should be a string.  Address the reader as "Dear Reader" and sign off as "TheseusInsight".
 Write in a friendly and engaging tone and try to make the content flow together naturally. 
 Ensure you cover all the papers you were provided in the source material you should have a total of {{top_n_papers}} papers discussed in the newsletter.
 Elaborate on each paper and explain to the reader why this paper is important, how it's exciting and how it is related to the research interests provided.
@@ -55,7 +55,7 @@ Instructions:
 
 Constraints:
 
-*   **Do not** include a salutation, signature, sections, headers, bullet points, or numbered lists. DO NOT SAY "Dear Reader" or "PaperPal". Only write the section content.
+*   **Do not** include a salutation, signature, sections, headers, bullet points, or numbered lists. DO NOT SAY "Dear Reader" or "TheseusInsight". Only write the section content.
 *   **Do not** use phrases like "firstly", "secondly", etc.
 *   **Do not** directly reference the research interests provided; they are for context only.
 *   **Do not** say "Elaboration", "Actionable Advice", "Personal Reflection", or similar phrases.
@@ -109,7 +109,7 @@ INSTRUCTIONS:
 
   *   **Format:**
       * Begin with "Dear Reader,\n".
-      * Sign off with "\n~PaperPal". 
+      * Sign off with "\n~TheseusInsight". 
       * Write the complete introduction in the provided JSON schema under 'draft'.
       * Make sure that the introduction is engaging and draws the reader in and speaks topically to the paper content at a high level.
 

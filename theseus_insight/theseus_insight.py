@@ -14,12 +14,12 @@ from typing import Optional, Callable
 from docling.document_converter import DocumentConverter
 
 # Local application imports
-from paperpal.communication import GmailCommunication, construct_email_body, upload_video
-from paperpal.data_processing import ArxivDataProcessor, PaperDatabase, Paper, Newsletter, Podcast
-from paperpal.data_processing.data_handling import PaperDatabase, Paper, Newsletter, Logs
-from paperpal.inference import SentenceTransformerInference
-from paperpal.podcast import PaperPalPodcastGenerator
-from paperpal.prompt import (
+from theseus_insight.communication import GmailCommunication, construct_email_body, upload_video
+from theseus_insight.data_processing import ArxivDataProcessor, PaperDatabase, Paper, Newsletter, Podcast
+from theseus_insight.data_processing.data_handling import PaperDatabase, Paper, Newsletter, Logs
+from theseus_insight.inference import SentenceTransformerInference
+from theseus_insight.podcast import TheseusInsightPodcastGenerator
+from theseus_insight.prompt import (
     NEWSLETTER_SYSTEM_PROMPT,
     RESEARCH_INTERESTS_SYSTEM_PROMPT,
     SYSTEM_CONTENT_EXTRACTION_SUMMARY,
@@ -32,7 +32,7 @@ from paperpal.prompt import (
     ResearchInterestsPromptData,
     NewsletterPromptData
 )
-from paperpal.utils import cosine_similarity, get_n_days_ago, TODAY, purge_ollama_cache
+from theseus_insight.utils import cosine_similarity, get_n_days_ago, TODAY, purge_ollama_cache
 
 load_dotenv()
 
@@ -51,7 +51,7 @@ INTRO_TEXT = [
     "This paper investigates..."
 ]
 
-class PaperPal:
+class TheseusInsight:
     def __init__(self,
                  research_interests_path="config/research_interests.txt",
                  n_days=7,
@@ -246,7 +246,7 @@ class PaperPal:
                 self.podcast_inference = self.orchestration_config.get('podcast_model', None)
                 if not self.podcast_inference:
                     raise ValueError("Podcast model not set in orchestration config.")
-                self.podcast_generator = PaperPalPodcastGenerator(
+                self.podcast_generator = TheseusInsightPodcastGenerator(
                     text_model=self.podcast_inference,
                     tts_provider=self.orchestration_config.get('tts_model', {}).get('tts_provider', 'kokoro'),
                     speaker_1_voice=self.orchestration_config.get('tts_model', {}).get('speaker_1_voice', 'af_bella'),
@@ -272,7 +272,7 @@ class PaperPal:
                 url=OLLAMA_URL
             )
             # Podcast generator re-using the same inference
-            self.podcast_generator = PaperPalPodcastGenerator(
+            self.podcast_generator = TheseusInsightPodcastGenerator(
                 text_model=self.inference,
                 tts_provider='kokoro',  # or your default
                 speaker_1_voice='af_bella',
@@ -807,7 +807,7 @@ class PaperPal:
 
                     podcast_content = self.podcast_generator.generate_podcast(
                         pdf_paths=list(top_n_df['url_pdf']),
-                        paperpal_sections=sections_data['sections'],
+                        theseus_insight_sections=sections_data['sections'],
                         output_format=self.output_format,
                         output_dir=self.output_dir,
                         prefix=self.prefix,
@@ -827,7 +827,7 @@ class PaperPal:
                     # so it merges the final audio with the animation
                     podcast_content = self.podcast_generator.generate_podcast(
                         pdf_paths=list(top_n_df['url_pdf']),
-                        paperpal_sections=sections_data['sections'],
+                        theseus_insight_sections=sections_data['sections'],
                         output_format=self.output_format,
                         output_dir=self.output_dir,
                         prefix=self.prefix,
@@ -903,7 +903,7 @@ class PaperPal:
                 purge_ollama_cache(OLLAMA_URL, self.model_name)
 
             # Log final success
-            self.papers_db.insert_log(Logs(status_code=200, status="Successfully completed PaperPal run"))
+            self.papers_db.insert_log(Logs(status_code=200, status="Successfully completed TheseusInsight run"))
 
             # Optionally remove all checkpoints on success
             self._cleanup_checkpoints()
