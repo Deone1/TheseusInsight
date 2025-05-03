@@ -31,6 +31,7 @@ langchain
 soundfile
 kokoro
 google-generativeai
+orpheus-cpp
 
 # Data Processing & Management
 pandas
@@ -62,6 +63,7 @@ appdirs
 # Media Processing
 pydub  # Audio
 moviepy  # Video
+pygame
 
 # YouTube Integration
 google-api-python-client
