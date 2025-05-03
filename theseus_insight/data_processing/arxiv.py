@@ -100,6 +100,7 @@ class ArxivDataProcessor:
         records = harvester.harvest()
         data_df = harvester.to_dataframe()
         data_df = data_df.rename(columns={"created": "date"})
+        data_df['date'] = pd.to_datetime(data_df['date'])
         return data_df
             
             
