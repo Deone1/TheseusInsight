@@ -88,9 +88,6 @@ class ArxivDataProcessor:
         start_date = start_dt.strftime("%Y-%m-%d")
         end_date = end_dt.strftime("%Y-%m-%d")
         # --- End: Sanity check and swap if needed ---
-        
-        print(f"Start date: {start_date}, End date: {end_date}")
-        print(f"Category: {self.category}, Subcategories: {self.subcategories}")
 
         harvester = ArxivOAIHarvester(
             category=self.category,
