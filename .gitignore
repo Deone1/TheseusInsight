@@ -335,3 +335,4 @@ music/
 checkpoints/
 
 paperpal/api/scripts/*.json
+output/
