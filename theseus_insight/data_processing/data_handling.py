@@ -29,8 +29,11 @@ class Paper(BaseModel):
     @field_validator('score')
     @classmethod
     def score_range(cls, v):
-        if not 0 <= v <= 10:
-            raise ValueError('Score must be between 0 and 10')
+        # Clamp score to [0, 10]
+        if v < 0:
+            return 0
+        if v > 10:
+            return 10
         return v
 
 class Logs(BaseModel):
