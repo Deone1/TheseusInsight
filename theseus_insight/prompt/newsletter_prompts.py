@@ -52,6 +52,7 @@ Instructions:
 *   **Maintain** a concise and focused style.
 *   **Do not** hallucinate or make up information.
 *   **Output** Limit your response to no more than 200 words.
+*   **Draft** only the section content. Do not include any other text.
 
 Constraints:
 
